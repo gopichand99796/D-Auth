@@ -83,19 +83,19 @@ export default function CommentList({ videoId }: CommentListProps) {
   }
 
   return (
-    <div className="mt-8 border-t pt-6">
-      <h3 className="text-lg font-semibold mb-4">Comments</h3>
+    <div className="mt-8 border-t border-gray-200 pt-6">
+      <h3 className="text-lg font-semibold mb-4 text-gray-900">Comments</h3>
 
       {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
+        <div className="rounded-lg bg-red-50 px-4 py-3 text-red-700 mb-4">
           {error}
         </div>
       )}
 
       {user && (
-        <div className="mb-6 pb-6 border-b">
+        <div className="mb-6 pb-6 border-b border-gray-200">
           <textarea
-            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             placeholder="Add a comment..."
             rows={3}
             value={newComment}
@@ -104,25 +104,25 @@ export default function CommentList({ videoId }: CommentListProps) {
           <button
             onClick={handleAddComment}
             disabled={submitting || !newComment.trim()}
-            className="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
+            className="mt-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
           >
             {submitting ? 'Posting...' : 'Post Comment'}
           </button>
         </div>
       )}
 
-      {loading && <p className="text-gray-500">Loading comments...</p>}
+      {loading && <p className="text-gray-500 text-sm">Loading comments...</p>}
 
       {!loading && comments.length === 0 && (
-        <p className="text-gray-500">No comments yet. Be the first to comment!</p>
+        <p className="text-gray-500 text-sm">No comments yet. Be the first to comment!</p>
       )}
 
       <div className="space-y-4">
         {comments.map((comment) => (
-          <div key={comment._id} className="pb-4 border-b">
+          <div key={comment._id} className="pb-4 border-b border-gray-200">
             <div className="flex justify-between items-start">
               <div>
-                <p className="font-semibold text-sm">{comment.user.username}</p>
+                <p className="font-semibold text-sm text-gray-900">{comment.user.username}</p>
                 <p className="text-xs text-gray-500">
                   {new Date(comment.createdAt).toLocaleDateString()}
                 </p>
@@ -151,7 +151,7 @@ export default function CommentList({ videoId }: CommentListProps) {
             {editingId === comment._id ? (
               <div className="mt-3">
                 <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                   value={editText}
                   onChange={(e) => setEditText(e.target.value)}
                   rows={2}
@@ -159,7 +159,7 @@ export default function CommentList({ videoId }: CommentListProps) {
                 <div className="flex gap-2 mt-2">
                   <button
                     onClick={() => handleEditComment(comment._id)}
-                    className="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700"
+                    className="rounded-lg bg-blue-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-blue-700"
                   >
                     Save
                   </button>
@@ -168,7 +168,7 @@ export default function CommentList({ videoId }: CommentListProps) {
                       setEditingId(null);
                       setEditText('');
                     }}
-                    className="bg-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-400"
+                    className="rounded-lg bg-gray-300 px-3 py-1 text-sm font-medium text-gray-700 transition hover:bg-gray-400"
                   >
                     Cancel
                   </button>

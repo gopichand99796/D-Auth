@@ -58,20 +58,20 @@ export default function UploadPage() {
 
   return (
     <section className="mx-auto max-w-3xl space-y-6 py-8">
-      <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-semibold text-slate-900">Upload Video</h1>
-            <p className="mt-2 text-sm text-slate-600">Share your video with the community.</p>
+            <h1 className="text-2xl font-semibold text-gray-900">Upload Video</h1>
+            <p className="mt-2 text-sm text-gray-600">Share your video with the community.</p>
           </div>
-          <div className="rounded-2xl bg-slate-50 px-4 py-2 text-sm text-slate-700">
+          <div className="rounded-lg bg-gray-50 px-4 py-2 text-sm text-gray-700">
             Add title, description and file details before upload.
           </div>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <label className="block text-sm font-medium text-slate-700">
+      <form onSubmit={handleSubmit} className="space-y-5 rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <label className="block text-sm font-medium text-gray-700">
           Title *
           <input
             type="text"
@@ -79,28 +79,28 @@ export default function UploadPage() {
             onChange={(e) => setTitle(e.target.value)}
             required
             disabled={loading}
-            className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-500 disabled:opacity-50"
+            className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
           />
         </label>
 
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-gray-700">
           Description
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={loading}
             rows={4}
-            className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-500 disabled:opacity-50"
+            className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
           />
         </label>
 
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-gray-700">
           Category
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             disabled={loading}
-            className="mt-2 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none focus:border-blue-500 disabled:opacity-50"
+            className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
           >
             <option>General</option>
             <option>Education</option>
@@ -110,7 +110,7 @@ export default function UploadPage() {
           </select>
         </label>
 
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-gray-700">
           Video File *
           <input
             type="file"
@@ -118,28 +118,28 @@ export default function UploadPage() {
             onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
             required
             disabled={loading}
-            className="mt-2 w-full text-sm text-slate-700 file:mr-4 file:rounded-xl file:border file:border-slate-200 file:bg-slate-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-slate-700 disabled:opacity-50"
+            className="mt-2 w-full text-sm text-gray-700 file:mr-4 file:rounded-lg file:border file:border-gray-300 file:bg-gray-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-gray-700 disabled:opacity-50"
           />
         </label>
 
-        <label className="block text-sm font-medium text-slate-700">
+        <label className="block text-sm font-medium text-gray-700">
           Thumbnail Image (optional)
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setThumbnailFile(e.target.files?.[0] || null)}
             disabled={loading}
-            className="mt-2 w-full text-sm text-slate-700 file:mr-4 file:rounded-xl file:border file:border-slate-200 file:bg-slate-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-slate-700 disabled:opacity-50"
+            className="mt-2 w-full text-sm text-gray-700 file:mr-4 file:rounded-lg file:border file:border-gray-300 file:bg-gray-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-gray-700 disabled:opacity-50"
           />
         </label>
 
-        {videoFile && <p className="text-xs text-slate-600">Selected: {videoFile.name}</p>}
+        {videoFile && <p className="text-xs text-gray-600">Selected: {videoFile.name}</p>}
 
         {progress > 0 && progress < 100 && (
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-2">
+          <div className="overflow-hidden rounded-lg border border-gray-200 bg-gray-50 p-2">
             <div
               className="h-2 bg-blue-600 transition-all"
-              style={{ width: `${progress}%` }}
+ style={{ width: `${progress}%` }}
             />
           </div>
         )}
@@ -149,7 +149,7 @@ export default function UploadPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+          className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {loading ? <Spinner /> : 'Upload'}
         </button>
