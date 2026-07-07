@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { likeVideo, unlikeVideo, getVideoLikes } from '../services/like';
 import { useAuth } from '../hooks/useAuth';
 
@@ -13,11 +13,7 @@ export default function LikeButton({ videoId }: LikeButtonProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadLikes();
-  }, [videoId]);
-
-  async function loadLikes() {
+  const loadLikes = useCallback(async () => {
     try {
       setLoading(true);
       const count = await getVideoLikes(videoId);
@@ -28,7 +24,11 @@ export default function LikeButton({ videoId }: LikeButtonProps) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [videoId]);
+
+  useEffect(() => {
+    loadLikes();
+  }, [loadLikes]);
 
   async function handleToggleLike() {
     if (!user) {

@@ -37,11 +37,13 @@ export default function RegisterPage() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-xl items-center justify-center bg-[#f9f9f9] px-4 py-12">
-      <div className="w-full rounded-lg border border-gray-200 bg-white p-10 shadow-sm">
-        <h1 className="text-2xl font-semibold text-gray-900">Register</h1>
-        <p className="mt-2 text-sm text-gray-600">Create a new account for the DTube project.</p>
+      <div className="w-full rounded-3xl border border-gray-200 bg-white p-10 shadow-sm">
+        <div className="mb-8">
+          <h1 className="text-3xl font-semibold text-gray-900">Create your account</h1>
+          <p className="mt-2 text-sm text-gray-600">Join DTube to upload and comment on videos.</p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <label className="block text-sm font-medium text-gray-700">
             Username
             <input
@@ -49,7 +51,7 @@ export default function RegisterPage() {
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               required
-              className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
+              className="mt-2 w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
             />
           </label>
 
@@ -60,7 +62,7 @@ export default function RegisterPage() {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               required
-              className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
+              className="mt-2 w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
             />
           </label>
 
@@ -71,7 +73,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               required
-              className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
+              className="mt-2 w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
             />
           </label>
 
@@ -82,20 +84,20 @@ export default function RegisterPage() {
               value={confirmPassword}
               onChange={(event) => setConfirmPassword(event.target.value)}
               required
-              className="mt-2 w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
+              className="mt-2 w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-1 focus:ring-blue-500"
             />
           </label>
+
+          {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+            className="w-full rounded-2xl bg-blue-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isSubmitting ? <Spinner /> : 'Register'}
           </button>
         </form>
-
-        {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{' '}

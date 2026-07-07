@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { subscribeToChannel, unsubscribeFromChannel, getChannelSubscribers } from '../services/subscription';
 import { useAuth } from '../hooks/useAuth';
 
@@ -14,11 +14,7 @@ export default function SubscribeButton({ channelId }: SubscribeButtonProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadSubscribers();
-  }, [channelId]);
-
-  async function loadSubscribers() {
+  const loadSubscribers = useCallback(async () => {
     try {
       setLoading(true);
       const count = await getChannelSubscribers(channelId);
@@ -29,7 +25,11 @@ export default function SubscribeButton({ channelId }: SubscribeButtonProps) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [channelId]);
+
+  useEffect(() => {
+    loadSubscribers();
+  }, [loadSubscribers]);
 
   async function handleToggleSubscribe() {
     if (!user) {

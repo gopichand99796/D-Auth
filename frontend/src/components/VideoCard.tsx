@@ -14,36 +14,32 @@ export default function VideoCard({ video, showDuration = true }: { video: Video
   const duration = showDuration ? getDuration() : undefined;
   const formattedViews = formatViewCount(video.views);
   const formattedDate = formatDate(video.createdAt);
+  const avatarLetter = video.ownerName?.charAt(0).toUpperCase() || 'U';
 
   return (
-    <article className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+    <article className="group overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg">
       <div className="relative overflow-hidden bg-gray-200 aspect-video">
         {thumbSrc ? (
           <img src={thumbSrc} alt={video.title} className="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-gray-500">
-            No thumbnail
-          </div>
+          <div className="flex h-full items-center justify-center text-sm text-gray-500">No thumbnail</div>
         )}
         {duration && (
-          <span className="absolute bottom-2 right-2 rounded bg-black/75 px-2 py-1 text-xs font-medium text-white">
+          <span className="absolute bottom-3 right-3 rounded-full bg-black/80 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white">
             {duration}
           </span>
         )}
       </div>
-      <div className="flex gap-3 p-3">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">
-          {video.ownerName.charAt(0).toUpperCase()}
+      <div className="flex gap-3 p-4">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700">
+          {avatarLetter}
         </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-medium text-gray-900 line-clamp-2 leading-snug">{video.title}</h3>
-          <div className="mt-1 text-xs text-gray-600">
-            <span className="font-medium text-gray-900">{video.ownerName}</span>
-            <span className="mx-1">•</span>
-            <span>{formattedViews} views</span>
-            <span className="mx-1">•</span>
-            <span>{formattedDate}</span>
-          </div>
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 leading-5">{video.title}</h3>
+          <p className="mt-2 text-xs text-gray-600">{video.ownerName}</p>
+          <p className="mt-1 text-xs text-gray-500">
+            {formattedViews} views · {formattedDate}
+          </p>
         </div>
       </div>
     </article>

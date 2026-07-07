@@ -8,6 +8,7 @@ import UploadPage from './pages/UploadPage';
 import ProfilePage from './pages/ProfilePage';
 import ChannelPage from './pages/ChannelPage';
 import TrendingPage from './pages/TrendingPage';
+import HistoryPage from './pages/HistoryPage';
 import AdminPage from './pages/AdminPage';
 import MainLayout from './layouts/MainLayout';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -19,6 +20,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="trending" element={<TrendingPage />} />
         <Route path="subscriptions" element={<HomePage />} />
+        <Route path="history" element={<HistoryPage />} />
         <Route
           path="channel"
           element={

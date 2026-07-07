@@ -1,25 +1,8 @@
-import { createContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { User } from '../types';
 import { loginUser, registerUser, getProfile } from '../services/auth';
 import { setAuthToken } from '../services/api';
-
-interface AuthContextValue {
-  user: User | null;
-  token: string | null;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
-  register: (username: string, email: string, password: string) => Promise<void>;
-}
-
-export const AuthContext = createContext<AuthContextValue>({
-  user: null,
-  token: null,
-  loading: false,
-  login: async () => {},
-  logout: () => {},
-  register: async () => {},
-});
+import { AuthContext } from './authContext';
 
 const AUTH_TOKEN_KEY = 'dtube_token';
 const AUTH_USER_KEY = 'dtube_user';
@@ -27,14 +10,16 @@ const AUTH_USER_KEY = 'dtube_user';
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    const storedToken = localStorage.getItem(AUTH_TOKEN_KEY);
+    return Boolean(storedToken);
+  });
 
   useEffect(() => {
     const storedToken = localStorage.getItem(AUTH_TOKEN_KEY);
     const storedUser = localStorage.getItem(AUTH_USER_KEY);
 
     if (!storedToken || !storedUser) {
-      setLoading(false);
       return;
     }
 

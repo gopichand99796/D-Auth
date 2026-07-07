@@ -1,9 +1,12 @@
+import { useState, type ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-const publicNavItems = [
+const baseNavItems = [
   { label: 'Home', to: '/', icon: 'home' },
   { label: 'Trending', to: '/trending', icon: 'trending' },
+  { label: 'Subscriptions', to: '/subscriptions', icon: 'subscriptions' },
+  { label: 'History', to: '/history', icon: 'history' },
 ];
 
 const protectedNavItems = [
@@ -14,7 +17,7 @@ const protectedNavItems = [
 
 const adminNavItems = [{ label: 'Admin', to: '/admin', icon: 'admin' }];
 
-const icons: Record<string, React.ReactNode> = {
+const icons: Record<string, ReactNode> = {
   home: (
     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
@@ -23,6 +26,19 @@ const icons: Record<string, React.ReactNode> = {
   trending: (
     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+    </svg>
+  ),
+  subscriptions: (
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 10l5 5 5-5" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15V3" />
+    </svg>
+  ),
+  history: (
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v5l3 3" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12A9 9 0 113 12a9 9 0 0118 0z" />
     </svg>
   ),
   upload: (
@@ -50,27 +66,42 @@ const icons: Record<string, React.ReactNode> = {
 
 export default function Sidebar() {
   const { user } = useAuth();
-  let navItems = user ? [...publicNavItems, ...protectedNavItems] : publicNavItems;
+  const [collapsed, setCollapsed] = useState(false);
+
+  let navItems = [...baseNavItems];
+  if (user) {
+    navItems = [...navItems, ...protectedNavItems];
+  }
   if (user?.role === 'admin') {
     navItems = [...navItems, ...adminNavItems];
   }
 
   return (
-    <nav className="space-y-1">
-      {navItems.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          className={({ isActive }) =>
-            `flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition ${
-              isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50'
-            }`
-          }
-        >
-          <span className="text-gray-500">{icons[item.icon]}</span>
-          {item.label}
-        </NavLink>
-      ))}
-    </nav>
+    <div className="space-y-4">
+      <button
+        type="button"
+        onClick={() => setCollapsed((value) => !value)}
+        className="flex w-full items-center justify-between rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-100"
+      >
+        <span>{collapsed ? 'Expand sidebar' : 'Collapse sidebar'}</span>
+        <span className="text-gray-400">{collapsed ? '›' : '‹'}</span>
+      </button>
+      <nav className="space-y-1">
+        {navItems.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) =>
+              `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                isActive ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50'
+              }`
+            }
+          >
+            <span className="text-gray-500">{icons[item.icon]}</span>
+            {!collapsed && item.label}
+          </NavLink>
+        ))}
+      </nav>
+    </div>
   );
 }

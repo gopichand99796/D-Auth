@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Comment } from '../services/comment';
 import { getCommentsByVideo, addComment as addCommentAPI, editComment as editCommentAPI, deleteComment as deleteCommentAPI } from '../services/comment';
 import { useAuth } from '../hooks/useAuth';
@@ -17,11 +17,7 @@ export default function CommentList({ videoId }: CommentListProps) {
   const [newComment, setNewComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    loadComments();
-  }, [videoId]);
-
-  async function loadComments() {
+  const loadComments = useCallback(async () => {
     try {
       setLoading(true);
       setError('');
@@ -33,7 +29,11 @@ export default function CommentList({ videoId }: CommentListProps) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [videoId]);
+
+  useEffect(() => {
+    loadComments();
+  }, [loadComments]);
 
   async function handleAddComment() {
     if (!newComment.trim()) return;
